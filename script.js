@@ -1,3 +1,4 @@
+
 let display = document.getElementById('display');
 let currentInput = '';
 let operator = null;
@@ -5,9 +6,9 @@ let firstOperand = null;
 
 function appendNumber(number) {
     if (currentInput.length >= 15) return;
-    
-    if (currentInput === '0' && number === 0) return; 
-    if (currentInput === '0' && number >= 1 && number <= 9) currentInput = ''; 
+
+    if (currentInput === '0' && number === 0) return;
+    if (currentInput === '0' && number >= 1 && number <= 9) currentInput = '';
     currentInput += number;
     updateDisplay();
 }
@@ -70,4 +71,13 @@ function clearDisplay() {
 
 function updateDisplay() {
     display.textContent = currentInput || '0';
+
+    const maxFontSize = 32;
+    const minFontSize = 10;
+    let fontSize = maxFontSize;
+
+    while (display.scrollWidth > display.clientWidth && fontSize > minFontSize) {
+        fontSize--;
+        display.style.fontSize = fontSize + 'px';
+    }
 }
