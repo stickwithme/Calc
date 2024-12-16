@@ -1,79 +1,70 @@
-const calculator = document.querySelector('.calculator')
-const display = calculator.querySelector('.calculator__display')
-const buttons = calculator.querySelectorAll('.calculator__button')
-
-let currentOperand = ''
-let previousOperand = ''
-let operation = undefined
-
-function updateDisplay() {
-  display.innerText = currentOperand || '0'
-}
+let display = document.getElementById('display')
+let currentInput = ''
+let operator = null
+let firstOperand = null
 
 function appendNumber(number) {
- 
-  if (number === '.' && currentOperand.includes('.')) return
-  currentOperand = currentOperand.toString() + number.toString()
+  if (currentInput.length >= 15) return
+  currentInput += number
   updateDisplay()
 }
 
-function chooseOperation(op) {
-  if (currentOperand === '') return
-  if (previousOperand !== '') {
-    compute()
+function appendDecimal() {
+  if (!currentInput.includes('.')) {
+    currentInput += '.'
   }
-  operation = op
-  previousOperand = currentOperand
-  currentOperand = ''
+  updateDisplay()
 }
 
-function compute() {
-  let computation
-  const prev = parseFloat(previousOperand)
-  const current = parseFloat(currentOperand)
-  if (isNaN(prev) || isNaN(current)) return
-  switch (operation) {
+function setOperator(op) {
+  if (currentInput === '') return
+  if (firstOperand === null) {
+    firstOperand = parseFloat(currentInput)
+  } else {
+    calculateResult()
+  }
+  operator = op
+  currentInput = ''
+}
+
+function calculateResult() {
+  if (operator === null || currentInput === '') return
+  let secondOperand = parseFloat(currentInput)
+  let result = 0
+
+  switch (operator) {
     case '+':
-      computation = prev + current
+      result = firstOperand + secondOperand
       break
     case '-':
-      computation = prev - current
+      result = firstOperand - secondOperand
       break
     case '*':
-      computation = prev * current
+      result = firstOperand * secondOperand
       break
     case '/':
-      computation = current !== 0 ? prev / current : 'Error'
+      if (secondOperand === 0) {
+        alert('Error: Division by zero')
+        clearDisplay()
+        return
+      }
+      result = firstOperand / secondOperand
       break
-    default:
-      return
   }
-  currentOperand = computation.toString()
-  operation = undefined
-  previousOperand = ''
+
+  currentInput = parseFloat(result.toFixed(10)).toString()
+  firstOperand = null
+  operator = null
   updateDisplay()
 }
 
-function clear() {
-  currentOperand = ''
-  previousOperand = ''
-  operation = undefined
+function clearDisplay() {
+  currentInput = ''
+  operator = null
+  firstOperand = null
   updateDisplay()
 }
 
-
-buttons.forEach((button) => {
-  button.addEventListener('click', () => {
-    const value = button.getAttribute('data-value')
-    if (button.classList.contains('operator')) {
-      chooseOperation(value)
-    } else if (button.classList.contains('calculate')) {
-      compute()
-    } else if (button.classList.contains('clear')) {
-      clear()
-    } else {
-      appendNumber(value)
-    }
-  })
-})
-updateDisplay()
+function updateDisplay() {
+  display.textContent = currentInput || '0'
+}
