@@ -71,7 +71,6 @@ function updateDisplay() {
     display.textContent = currentInput || '0';
     display.style.fontSize = '2rem';
 
-    // Автоматическое уменьшение шрифта
     while (display.scrollWidth > display.clientWidth && parseFloat(display.style.fontSize) > 0.5) {
         display.style.fontSize = (parseFloat(display.style.fontSize) - 0.1) + 'rem';
     }
