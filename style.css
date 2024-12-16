@@ -24,16 +24,13 @@ body {
 
 .display {
   background-color: #f4f4f4;
-  padding: 20px;
+  padding: 10px;
   text-align: right;
   font-size: 2rem;
   font-weight: bold;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: clip;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
+  overflow: auto;
+  word-wrap: break-word;
+  white-space: normal;
 }
 
 .buttons {
