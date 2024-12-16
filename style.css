@@ -1,3 +1,4 @@
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -29,7 +30,10 @@ body {
   font-weight: bold;
   overflow: hidden;
   white-space: nowrap;
-  text-overflow: ellipsis;
+  text-overflow: clip;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 .buttons {
