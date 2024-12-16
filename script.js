@@ -5,8 +5,6 @@ let operator = null;
 let firstOperand = null;
 
 function appendNumber(number) {
-    if (currentInput.length >= 15) return;
-
     if (currentInput === '0' && number === 0) return;
     if (currentInput === '0' && number >= 1 && number <= 9) currentInput = '';
     currentInput += number;
@@ -56,7 +54,7 @@ function calculateResult() {
             break;
     }
 
-    currentInput = parseFloat(result.toFixed(10)).toString();
+    currentInput = result.toString();
     firstOperand = null;
     operator = null;
     updateDisplay();
@@ -71,13 +69,10 @@ function clearDisplay() {
 
 function updateDisplay() {
     display.textContent = currentInput || '0';
+    display.style.fontSize = '2rem';
 
-    const maxFontSize = 32;
-    const minFontSize = 10;
-    let fontSize = maxFontSize;
-
-    while (display.scrollWidth > display.clientWidth && fontSize > minFontSize) {
-        fontSize--;
-        display.style.fontSize = fontSize + 'px';
+    // Автоматическое уменьшение шрифта
+    while (display.scrollWidth > display.clientWidth && parseFloat(display.style.fontSize) > 0.5) {
+        display.style.fontSize = (parseFloat(display.style.fontSize) - 0.1) + 'rem';
     }
 }
