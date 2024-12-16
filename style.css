@@ -29,7 +29,6 @@ body {
   font-size: 2rem;
   font-weight: bold;
   overflow: auto;
-  word-wrap: break-word;
   white-space: normal;
 }
 
